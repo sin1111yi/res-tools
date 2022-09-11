@@ -11,7 +11,7 @@
 
 const char helpMenu[HELP_INFO_COUNT][128] = {
     "-h    --help          show help menu, add another param for more info \n",
-    "-d    --stepdown      calculate res value under DC/DC step-down mode \n",
+    "-d    --stepdown      calculate res value under DC/DC mode \n",
     "-p    --parallel      calculate res under parallel mode \n",
     // there is an empty line
     "\n-----------------  other command have not been set  ----------------- \n",
@@ -22,7 +22,7 @@ const char parallelHelpInfo[] = "Formula: Rp = (R1 * R2) / (R1 + R2) \ne.g. | in
 
 typedef enum ChipMode_e
 {
-    MODE_DCDC_STEP_DOWN = 1,
+    MODE_DCDC_STEP_DOWN_UP = 1,
     MODE_PARALLEL_RES_1 = 2,
     MODE_PARALLEL_RES_2 = 3
 } ChipMode_t;
@@ -51,7 +51,7 @@ double stepDown_R2Calc(char **param, unsigned int param_n)
     }
     else
     {
-        printf("calculating R2 in DC/DC step-down mode... \n");
+        printf("calculating R2 in DC/DC mode... \n");
 
         Vref = atof(param[2]);
         if ((Vref > -1e-10) && (Vref < 1e-10))
@@ -177,7 +177,7 @@ int main(char *argv, char **args)
             param_n++;
         }
 
-        mode = MODE_DCDC_STEP_DOWN;
+        mode = MODE_DCDC_STEP_DOWN_UP;
     }
     else if (!strcmp(param[param_n], "-p"))
     {
@@ -210,7 +210,7 @@ int main(char *argv, char **args)
 
     switch (mode)
     {
-    case MODE_DCDC_STEP_DOWN:
+    case MODE_DCDC_STEP_DOWN_UP:
 
         stepDown_R2Calc(param, param_n);
 
